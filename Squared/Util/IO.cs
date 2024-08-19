@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text.RegularExpressions;
 #if WINDOWS
-using ComTypes = System.Runtime.InteropServices.ComTypes;
-using System.Drawing;
 #endif
 
 #if !WINDOWS && !SDL2 && !FNA
