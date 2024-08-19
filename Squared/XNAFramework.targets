@@ -159,13 +159,15 @@
     <Exec Command='del /Q /S "$(ShaderLocalBinDirectory)\*.bin"' />
   </Target>
   -->
-
-  <Target Name="CompileShaders" Condition="'$(ShaderDirectory)' != ''" BeforeTargets="BeforeBuild">
+  <Target Name="CompileShaders" Condition="'$(ShaderDirectory)' != '' and '$(OS)' != 'Unix'" BeforeTargets="BeforeBuild">
     <Message Text="Loaded property overrides from '$(XNAPropertiesOverridePath)'" />
     <Message Importance="High" Text="Compiling shaders" />
     <Error Text="You must set SquaredPath to use the shader compiler" Condition=" '$(SquaredPath)' == '' " />
 
     <Exec Command='"$(ShaderCompilerPath)" "$(SquaredPath)\ext\fxc" "$(ShaderDirectory)" "$(ShaderLocalBinDirectory)" "/O$(ShaderOptimizationLevel) /Zi $(ShaderCompilerDefines)" "$(ShaderCompilerExtraOptions)" "$(TestParsePath)"' />
+  </Target>
+  <Target Name="Skip CompileShaders" Condition="'$(OS)' == 'Unix'" BeforeTargets="BeforeBuild">
+    <Message Text="Skipping CompileShaders step because OS was Unix" />
   </Target>
 
   <ItemGroup Condition="'$(ShaderDirectory)' != ''">
